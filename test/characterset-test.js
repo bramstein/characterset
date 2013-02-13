@@ -287,6 +287,12 @@ describe('CharacterSet', function () {
       expect(a.subset(b)).to.be(true);
       expect(b.subset(a)).to.be(false);
     });
+
+    it('should consider a character set a subset of itself', function () {
+      var a = new CharacterSet([1, 2]);
+
+      expect(a.subset(a)).to.be(true);
+    });
   });
 
   describe('#toRegExp', function () {
