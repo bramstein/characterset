@@ -243,6 +243,32 @@ describe('CharacterSet', function () {
   });
 
   describe('#difference', function () {
+    it('should return the same set if there are now common code points', function () {
+      var a = new CharacterSet([1, 2]),
+          b = new CharacterSet([3, 4]);
+
+      expect(a.difference(b).data).to.eql({
+        1: true,
+        2: true
+      });
+      expect(b.difference(a).data).to.eql({
+        3: true,
+        4: true
+      });
+      expect(a.difference(a).data).to.eql({});
+    });
+
+    it('should only return those code points that are not in common', function () {
+      var a = new CharacterSet([1, 2, 3]),
+          b = new CharacterSet([2, 3, 4]);
+
+      expect(a.difference(b).data).to.eql({
+        1: true
+      });
+      expect(b.difference(a).data).to.eql({
+        4: true
+      });
+    });
   });
 
   describe('#subset', function () {
