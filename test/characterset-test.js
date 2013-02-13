@@ -198,15 +198,69 @@ describe('CharacterSet', function () {
   });
 
   describe('#union', function () {
+    it('should union two distinct character sets', function () {
+      var a = new CharacterSet([1, 2]),
+          b = new CharacterSet([3, 4]);
+
+      expect(a.union(b).data).to.eql({
+        1: true,
+        2: true,
+        3: true,
+        4: true
+      });
+    });
+
+    it('should union two overlapping character sets', function () {
+      var a = new CharacterSet([1, 2, 3]),
+          b = new CharacterSet([2, 3, 4]);
+
+      expect(a.union(b).data).to.eql({
+        1: true,
+        2: true,
+        3: true,
+        4: true
+      });
+    });
   });
 
   describe('#intersection', function () {
+    it('should not find any code points in common', function () {
+      var a = new CharacterSet([1, 2]),
+          b = new CharacterSet([3, 4]);
+
+      expect(a.intersect(b).data).to.eql({});
+    });
+
+    it('should find code points in common', function () {
+      var a = new CharacterSet([1, 2, 3]),
+          b = new CharacterSet([2, 3, 4]);
+
+      expect(a.intersect(b).data).to.eql({
+        2: true,
+        3: true
+      });
+    });
   });
 
   describe('#difference', function () {
   });
 
   describe('#subset', function () {
+    it('should consider an empty character set as a subset of any character set', function () {
+      var a = new CharacterSet(),
+          b = new CharacterSet([1, 2]);
+
+      expect(a.subset(b)).to.be(true);
+      expect(b.subset(a)).to.be(false);
+    });
+
+    it('should consider a character set a subset only if all its codepoints are present in another character set', function () {
+      var a = new CharacterSet([1, 2]),
+          b = new CharacterSet([1, 2, 3]);
+
+      expect(a.subset(b)).to.be(true);
+      expect(b.subset(a)).to.be(false);
+    });
   });
 
   describe('#toRegExp', function () {
