@@ -1,0 +1,14 @@
+{
+  "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
+  "name": "characterset",
+  "description": "A library for working with Unicode character sets",
+  "version": "0.0.1",
+  "repository": {
+    "url": ""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "1.8.1",
+    "expect.js": "0.2.0"
+  }
+}
