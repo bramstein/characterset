@@ -148,26 +148,32 @@ describe('CharacterSet', function () {
   });
 
   describe('encodeCodePoint', function () {
+    var characterSet = null;
+
+    beforeEach(function () {
+      characterSet = new CharacterSet();
+    });
+
     it('should encode ASCII safe characters as themselves', function () {
-      expect(CharacterSet.encodeCodePoint(65)).to.eql('A');
-      expect(CharacterSet.encodeCodePoint(57)).to.eql('9');
-      expect(CharacterSet.encodeCodePoint(97)).to.eql('a');
+      expect(characterSet.encodeCodePoint(65)).to.eql('A');
+      expect(characterSet.encodeCodePoint(57)).to.eql('9');
+      expect(characterSet.encodeCodePoint(97)).to.eql('a');
     });
 
     it('should encode ASCII unsafe code points encoded', function () {
-      expect(CharacterSet.encodeCodePoint(0)).to.eql('\\u0000');
-      expect(CharacterSet.encodeCodePoint(36)).to.eql('\\u0024');
-      expect(CharacterSet.encodeCodePoint(62)).to.eql('\\u003E');
-      expect(CharacterSet.encodeCodePoint(127)).to.eql('\\u007F');
+      expect(characterSet.encodeCodePoint(0)).to.eql('\\u0000');
+      expect(characterSet.encodeCodePoint(36)).to.eql('\\u0024');
+      expect(characterSet.encodeCodePoint(62)).to.eql('\\u003E');
+      expect(characterSet.encodeCodePoint(127)).to.eql('\\u007F');
     });
 
     it('should always encode code points in the BMP that are not safe characters', function () {
-      expect(CharacterSet.encodeCodePoint(20013)).to.eql('\\u4E2D');
-      expect(CharacterSet.encodeCodePoint(22269)).to.eql('\\u56FD');
+      expect(characterSet.encodeCodePoint(20013)).to.eql('\\u4E2D');
+      expect(characterSet.encodeCodePoint(22269)).to.eql('\\u56FD');
     });
 
     it('should encode code points outside the BMP as surrogate pairs', function () {
-      expect(CharacterSet.encodeCodePoint(119558)).to.eql('\\uD834\\uDF06');
+      expect(characterSet.encodeCodePoint(119558)).to.eql('\\uD834\\uDF06');
     });
   });
 
