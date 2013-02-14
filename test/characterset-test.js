@@ -48,9 +48,65 @@ describe('CharacterSet', function () {
     });
   });
 
-  describe('#toArray', function () {
-    var cs = new CharacterSet();
+  describe('#expandRange', function () {
+    it('should not expand non ranges', function () {
+      var cs = new CharacterSet();
 
+      expect(cs.expandRange([1, 2, 3])).to.eql([1, 2, 3]);
+    });
+
+    it('should expand a single range', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.expandRange([[1, 4]])).to.eql([1, 2, 3, 4]);
+    });
+
+    it('should expand multiple ranges', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.expandRange([[1, 4], [5, 8]])).to.eql([1, 2, 3, 4, 5, 6, 7, 8]);
+    });
+
+    it('should expand ranges and non ranges', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.expandRange([[1, 2], 3, 4, [5, 8]])).to.eql([1, 2, 3, 4, 5, 6, 7, 8]);
+    });
+  });
+
+  describe('#compressRange', function () {
+    it('should not compress non continuous code points', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.compressRange([1, 3, 5])).to.eql([1, 3, 5]);
+    });
+
+    it('should compress a single range', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.compressRange([1, 2, 3])).to.eql([[1,3]]);
+    });
+
+    it('should not compress a range only consisting of two code points', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.compressRange([1, 2])).to.eql([1, 2]);
+    });
+
+    it('should compress multiple ranges', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.compressRange([1, 2, 3, 5, 6, 7])).to.eql([[1, 3], [5, 7]]);
+    });
+
+    it('should compress multiple ranges and single code points', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.compressRange([1, 2, 3, 5, 7, 8, 9, 11])).to.eql([[1, 3], 5, [7, 9], 11]);
+    });
+  });
+
+  describe('#toArray', function () {
     it('should return the correct code points', function () {
       var cs = new CharacterSet([1, 2]);
 
