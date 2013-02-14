@@ -56,6 +56,12 @@ describe('CharacterSet', function () {
 
       expect(cs.toArray()).to.eql([1, 2]);
     });
+
+    it('should return the correct code points in sorted order', function () {
+      var cs = new CharacterSet([2, 1, 3, 0]);
+
+      expect(cs.toArray()).to.eql([0, 1, 2, 3]);
+    });
   });
 
   describe('#isEmpty', function () {
