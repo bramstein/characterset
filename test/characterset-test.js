@@ -143,6 +143,14 @@ describe('CharacterSet', function () {
     });
   });
 
+  describe('#toRange', function () {
+    it('should return a range', function () {
+      var cs = new CharacterSet([1, [2, 4], 5]);
+
+      expect(cs.toRange()).to.eql([[1,5]]);
+    });
+  });
+
   describe('#isEmpty', function () {
     it('should return true when empty', function () {
       var cs = new CharacterSet();
