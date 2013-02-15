@@ -141,6 +141,12 @@ describe('CharacterSet', function () {
 
       expect(cs.toArray()).to.eql([0, 1, 2, 3]);
     });
+
+    it('should sort numerically instead of lexicographical', function () {
+      var cs = new CharacterSet([7, 40, 300]);
+
+      expect(cs.toArray()).to.eql([7, 40, 300]);
+    });
   });
 
   describe('#toRange', function () {
