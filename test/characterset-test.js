@@ -46,6 +46,29 @@ describe('CharacterSet', function () {
         119558: true
       });
     });
+
+    it('should create a CharacterSet from a range', function () {
+      var cs = new CharacterSet([1, 2]);
+
+      expect(cs).not.to.be(null);
+      expect(cs.data).to.eql({
+        1: true,
+        2: true
+      });
+    });
+
+    it('should create a CharacterSet from a compressed range', function () {
+      var cs = new CharacterSet([1, [3, 5], 6]);
+
+      expect(cs).not.to.be(null);
+      expect(cs.data).to.eql({
+        1: true,
+        3: true,
+        4: true,
+        5: true,
+        6: true
+      });
+    });
   });
 
   describe('#expandRange', function () {
