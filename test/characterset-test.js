@@ -71,6 +71,56 @@ describe('CharacterSet', function () {
     });
   });
 
+  describe('#getSize', function () {
+    it('should return zero on an empty character set', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.getSize()).to.eql(0);
+    });
+
+    it('should return the correct size with single code points', function () {
+      var cs = new CharacterSet([1, 2]);
+
+      expect(cs.getSize()).to.eql(2);
+    });
+
+    it('should return the correct size with ranges', function () {
+      var cs = new CharacterSet([[1, 5]]);
+
+      expect(cs.getSize()).to.eql(5);
+    });
+
+    it('should return the correct size for a string', function () {
+      var cs = new CharacterSet('hello world');
+
+      expect(cs.getSize()).to.eql(8);
+    });
+
+    it('should return the correct size with surrogate pairs', function () {
+      var cs = new CharacterSet('\uD834\uDF06');
+
+      expect(cs.getSize()).to.eql(1);
+    });
+
+    it('should maintain the correct size when removing code points', function () {
+      var cs = new CharacterSet([1, 2, 3]);
+
+      expect(cs.getSize()).to.eql(3);
+
+      cs.remove(3);
+      expect(cs.getSize()).to.eql(2);
+    });
+
+    it('should maintain the correct size when adding code points', function () {
+      var cs = new CharacterSet();
+
+      expect(cs.getSize()).to.eql(0);
+
+      cs.add(1);
+      expect(cs.getSize()).to.eql(1);
+    });
+  });
+
   describe('#expandRange', function () {
     it('should not expand non ranges', function () {
       var cs = new CharacterSet();
