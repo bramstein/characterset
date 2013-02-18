@@ -521,5 +521,51 @@ describe('CharacterSet', function () {
   });
 
   describe('#toRegExp', function () {
+    it('should build a regex for safe ASCII', function () {
+      var cs = new CharacterSet(67);
+
+      expect(cs.toRegExp()).to.eql('C');
+    });
+
+    it('should build a regex for a safe ASCII range', function () {
+      var cs = new CharacterSet([[67,70]]);
+
+      expect(cs.toRegExp()).to.eql('[C-F]');
+    });
+
+    it('should build a regex for ranges and points', function () {
+      var cs = new CharacterSet([1, 3, [67, 70]]);
+
+      expect(cs.toRegExp()).to.eql('[\\u0001\\u0003C-F]');
+    });
+
+    it('should build a regex for a range that crosses the BMP', function () {
+      var cs = new CharacterSet([[65534, 65537]]);
+
+      expect(cs.toRegExp()).to.eql('[\\uFFFE\\uFFFF]|\\uD800[\\uDC00\\uDC01]');
+    });
+
+    it('should build a regex for a code point outside the BMP', function () {
+      var cs = new CharacterSet(119558);
+
+      expect(cs.toRegExp()).to.eql('\\uD834\\uDF06');
+    });
+
+    it('should build a regex for a code point range outside the BMP', function () {
+      var cs = new CharacterSet([[119558, 119638]]);
+
+      expect(cs.toRegExp()).to.eql('\\uD834[\\uDF06-\\uDF56]');
+    });
+
+    it('should build a regex for a code point range and point outside the BMP', function () {
+      var cs = new CharacterSet([119555, [119558, 119638]]);
+      expect(cs.toRegExp()).to.eql('\\uD834[\\uDF03\\uDF06-\\uDF56]');
+    });
+
+    it('should build a regex for a code point range outside the BMP that spans multiple high surrogates', function () {
+      var cs = new CharacterSet([[119558, 126980]]);
+
+      expect(cs.toRegExp()).to.eql('\\uD834[\\uDF06-\\uDFFF]|[\\uD835-\\uD83B][\\uDC00-\\uDFFF]|\\uD83C[\\uDC00-\\uDC04]');
+    });
   });
 });
