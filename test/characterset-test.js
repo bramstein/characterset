@@ -388,25 +388,31 @@ describe('CharacterSet', function () {
     it('should return ASCII ranges', function () {
       var cs = new CharacterSet('abc');
 
-      expect(cs.toRangeString()).to.eql('a-c');
+      expect(cs.toRangeString()).to.eql('[a-c]');
     });
 
     it('should return combined ASCII and encoded ranges', function () {
       var cs = new CharacterSet([[67, 127]]);
 
-      expect(cs.toRangeString()).to.eql('C-\\u007F');
+      expect(cs.toRangeString()).to.eql('[C-\\u007F]');
     });
 
     it('should return encoded ranges', function () {
       var cs = new CharacterSet([[127, 255]]);
 
-      expect(cs.toRangeString()).to.eql('\\u007F-\\u00FF');
+      expect(cs.toRangeString()).to.eql('[\\u007F-\\u00FF]');
     });
 
     it('should return encoded ranges outside the BMP', function () {
       var cs = new CharacterSet([[0x10000,0x10FFF]]);
 
-      expect(cs.toRangeString()).to.eql('\\uD800\\uDC00-\\uD803\\uDFFF');
+      expect(cs.toRangeString()).to.eql('[\\uD800\\uDC00-\\uD803\\uDFFF]');
+    });
+
+    it('should return range and single points', function () {
+      var cs = new CharacterSet([1, [4, 7]]);
+
+      expect(cs.toRangeString()).to.eql('\\u0001[\\u0004-\\u0007]');
     });
   });
 
