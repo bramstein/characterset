@@ -121,6 +121,32 @@ describe('CharacterSet', function () {
     });
   });
 
+  describe('#equals', function () {
+    it('should consider two empty character sets equal', function () {
+      var a = new CharacterSet(),
+          b = new CharacterSet();
+
+      expect(a.equals(b)).to.be(true);
+      expect(b.equals(a)).to.be(true);
+    });
+
+    it('should consider two identical non-empty character sets equal', function () {
+      var a = new CharacterSet(200),
+          b = new CharacterSet(200);
+
+      expect(a.equals(b)).to.be(true);
+      expect(b.equals(a)).to.be(true);
+    });
+
+    it('should consider two different character sets to be unequal', function () {
+      var a = new CharacterSet(200),
+          b = new CharacterSet(404);
+
+      expect(a.equals(b)).to.be(false);
+      expect(b.equals(a)).to.be(false);
+    });
+  });
+
   describe('#expandRange', function () {
     it('should not expand non ranges', function () {
       var cs = new CharacterSet();
