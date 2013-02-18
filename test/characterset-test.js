@@ -382,13 +382,19 @@ describe('CharacterSet', function () {
     it('should return return ASCII as ASCII', function () {
       var cs = new CharacterSet('ac');
 
-      expect(cs.toRangeString()).to.eql('ac');
+      expect(cs.toRangeString()).to.eql('[ac]');
     });
 
     it('should return ASCII ranges', function () {
       var cs = new CharacterSet('abc');
 
       expect(cs.toRangeString()).to.eql('[a-c]');
+    });
+
+    it('should return ASCII range and points', function () {
+      var cs = new CharacterSet('abch');
+
+      expect(cs.toRangeString()).to.eql('[a-ch]');
     });
 
     it('should return combined ASCII and encoded ranges', function () {
@@ -412,7 +418,7 @@ describe('CharacterSet', function () {
     it('should return range and single points', function () {
       var cs = new CharacterSet([1, [4, 7]]);
 
-      expect(cs.toRangeString()).to.eql('\\u0001[\\u0004-\\u0007]');
+      expect(cs.toRangeString()).to.eql('[\\u0001\\u0004-\\u0007]');
     });
   });
 
