@@ -44,11 +44,11 @@ Once you have an instance of CharacterSet you can use the following methods on i
   <dt>isEmpty()</dt>
   <dd>Returns true if this set is empty.</dd>
 
-  <dt>add(codePoint)</dt>
-  <dd>Adds the given code point to this set.</dd>
+  <dt>add(codePoint, ...)</dt>
+  <dd>Adds the given code point(s) to this set.</dd>
 
-  <dt>remove(codePoint)</dt>
-  <dd>Removes the given code point from this set.</dd>
+  <dt>remove(codePoint, ...)</dt>
+  <dd>Removes the given code point(s) from this set.</dd>
 
   <dt>contains(codePoint)</dt>
   <dd>Returns true if the given code point is in this set.</dd>

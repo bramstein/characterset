@@ -248,7 +248,11 @@ describe('CharacterSet', function () {
   });
 
   describe('#add', function () {
-    var cs = new CharacterSet();
+    var cs = null;
+
+    beforeEach(function () {
+      cs = new CharacterSet();
+    });
 
     it('should add a single code point', function () {
       cs.add(1);
@@ -260,6 +264,7 @@ describe('CharacterSet', function () {
     });
 
     it('should add another code point', function () {
+      cs.add(1);
       cs.add(2);
 
       expect(cs.size).to.eql(2);
@@ -272,6 +277,7 @@ describe('CharacterSet', function () {
     it('should not add the same code point twice', function () {
       cs.add(1);
       cs.add(2);
+      cs.add(1);
 
       expect(cs.size).to.eql(2);
       expect(cs.data).to.eql({
@@ -279,10 +285,33 @@ describe('CharacterSet', function () {
         2: true
       });
     });
+
+    it('should add multiple code points at the same time', function () {
+      cs.add(1, 2);
+
+      expect(cs.size).to.eql(2);
+      expect(cs.data).to.eql({
+        1: true,
+        2: true
+      });
+    });
+
+    it('should only add a single code point if they are the same', function () {
+      cs.add(1, 1);
+
+      expect(cs.size).to.eql(1);
+      expect(cs.data).to.eql({
+        1: true
+      });
+    });
   });
 
   describe('#remove', function () {
-    var cs = new CharacterSet([1, 2, 3, 4]);
+    var cs = null;
+
+    beforeEach(function () {
+      cs = new CharacterSet([1, 2, 3, 4]);
+    });
 
     it('should remove a single code point', function () {
       cs.remove(1);
@@ -297,6 +326,7 @@ describe('CharacterSet', function () {
     });
 
     it('should remove another code point', function () {
+      cs.remove(1);
       cs.remove(2);
 
       expect(cs.size).to.eql(2);
@@ -311,6 +341,18 @@ describe('CharacterSet', function () {
     it('should not remove the same code point twice', function () {
       cs.remove(1);
       cs.remove(2);
+
+      expect(cs.size).to.eql(2);
+      expect(cs.data).to.eql({
+        1: false,
+        2: false,
+        3: true,
+        4: true
+      });
+    });
+
+    it('should remove two code points at the same time', function () {
+      cs.remove(1, 2);
 
       expect(cs.size).to.eql(2);
       expect(cs.data).to.eql({
