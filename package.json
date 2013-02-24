@@ -3,7 +3,7 @@
   "name": "characterset",
   "description": "A library for working with Unicode character sets",
   "keywords": ["unicode", "utf16", "characterset", "character set", "surrogate pair"],
-  "version": "1.1.0",
+  "version": "1.1.1",
   "repository": {
     "url": "https://github.com/bramstein/characterset.git"
   },
