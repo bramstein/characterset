@@ -8,7 +8,7 @@ If you are using Node.js you can install it using npm:
 
     $ npm install characterset
 
-If you want to use CharacterSet in the browser, copy `lib/characterset.js` into your project and remove the `module.exports = CharacterSet;` line at the end of the file.
+If you want to use CharacterSet in the browser, use the global `CharacterSet` constructor or include CharacterSet as an AMD module.
 
 ## API
 
