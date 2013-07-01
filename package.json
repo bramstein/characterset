@@ -7,6 +7,9 @@
   "repository": {
     "url": "https://github.com/bramstein/characterset.git"
   },
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
   "main": "./lib/characterset.js",
   "dependencies": {},
   "devDependencies": {

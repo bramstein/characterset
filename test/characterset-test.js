@@ -1,4 +1,15 @@
 describe('CharacterSet', function () {
+  var CharacterSet = null,
+      expect = null;
+
+  if (typeof exports === 'object') {
+    CharacterSet = require('../lib/characterset');
+    expect = require('expect.js');
+  } else {
+    CharacterSet = window.CharacterSet;
+    expect = window.expect;
+  }
+
   describe('#constructor', function () {
     it('should create a CharacterSet instance that is empty', function () {
       var cs = new CharacterSet();
