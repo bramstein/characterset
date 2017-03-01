@@ -73,6 +73,12 @@ Once you have an instance of CharacterSet you can use the following methods on i
 
   <dt>toString()</dt>
   <dd>Returns a string representation of this character set.</dd>
+
+  <dt>toHexString()</dt>
+  <dd>Returns a hex string representation of this character set.</dd>
+
+  <dt>ToHexRangeString()</dt>
+  <dd>Returns a hex string representation with ranges of this character set.</dd>
 </dl>
 
 ## License

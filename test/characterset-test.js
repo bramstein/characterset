@@ -431,6 +431,70 @@ describe('CharacterSet', function () {
     });
   });
 
+  describe('#toHexString', function () {
+    it('should return hex', function () {
+      var cs = new CharacterSet('abc');
+
+      expect(cs.toHexString()).to.eql('U+61,U+62,U+63');
+    });
+
+    it('should not contain duplicates', function () {
+      var cs = new CharacterSet('abcabc');
+
+      expect(cs.toHexString()).to.eql('U+61,U+62,U+63');
+    });
+
+    it('should encode characters inside the BMP', function () {
+      var cs = new CharacterSet([20013, 22269]);
+
+      expect(cs.toHexString()).to.eql('U+4E2D,U+56FD');
+    });
+
+    it('should encode characters outside the BMP as a single codepoint', function () {
+      var cs = new CharacterSet(119558);
+
+      expect(cs.toHexString()).to.eql('U+1D306');
+    });
+  });
+
+  describe('#toHexRangeString', function () {
+    it('should return return hex', function () {
+      var cs = new CharacterSet('ac');
+
+      expect(cs.toHexRangeString()).to.eql('U+61,U+63');
+    });
+
+    it('should return a hex range', function () {
+      var cs = new CharacterSet('abc');
+
+      expect(cs.toHexRangeString()).to.eql('U+61-63');
+    });
+
+    it('should return a hex range and individual code points', function () {
+      var cs = new CharacterSet('abch');
+
+      expect(cs.toHexRangeString()).to.eql('U+61-63,U+68');
+    });
+
+    it('should return encoded ranges', function () {
+      var cs = new CharacterSet([[127, 255]]);
+
+      expect(cs.toHexRangeString()).to.eql('U+7F-FF');
+    });
+
+    it('should return encoded ranges outside the BMP', function () {
+      var cs = new CharacterSet([[0x10000,0x10FFF]]);
+
+      expect(cs.toHexRangeString()).to.eql('U+10000-10FFF');
+    });
+
+    it('should return range and single points', function () {
+      var cs = new CharacterSet([1, [4, 7]]);
+
+      expect(cs.toHexRangeString()).to.eql('U+1,U+4-7');
+    });
+  });
+
   describe('#toRangeString', function () {
     it('should return return ASCII as ASCII', function () {
       var cs = new CharacterSet('ac');
