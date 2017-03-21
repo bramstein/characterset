@@ -685,4 +685,81 @@ describe('CharacterSet', function () {
       expect(cs.toRegExp()).to.eql('\\uD834[\\uDF06-\\uDFFF]|[\\uD835-\\uD83B][\\uDC00-\\uDFFF]|\\uD83C[\\uDC00-\\uDC04]');
     });
   });
+
+  describe('parseUnicodeRange', function () {
+    it('parses an empty string', function () {
+      var cs = CharacterSet.parseUnicodeRange('');
+
+      expect(cs.size).to.eql(0);
+      expect(cs.data).to.eql({});
+    });
+
+    it('parses a single value', function () {
+      var cs = CharacterSet.parseUnicodeRange('u+23,U+23');
+
+      expect(cs.size).to.eql(1);
+      expect(cs.data).to.eql({
+        35: true
+      });
+    });
+
+    it('parses multiple values', function () {
+      var cs = CharacterSet.parseUnicodeRange('u+23, u+22');
+
+      expect(cs.size).to.eql(2);
+      expect(cs.data).to.eql({
+        34: true,
+        35: true
+      });
+    });
+
+    it('parses ranges', function () {
+      var cs = CharacterSet.parseUnicodeRange('u+22-25');
+
+      expect(cs.size).to.eql(4);
+      expect(cs.data).to.eql({
+        34: true,
+        35: true,
+        36: true,
+        37: true
+      });
+    });
+
+    it('parses multiple ranges', function () {
+      var cs = CharacterSet.parseUnicodeRange('u+22-24, u+25-28');
+
+      expect(cs.data).to.eql({
+        34: true,
+        35: true,
+        36: true,
+        37: true,
+        38: true,
+        39: true,
+        40: true
+      });
+    });
+
+    it('parses wildcards', function () {
+      var cs = CharacterSet.parseUnicodeRange('u+1?');
+
+      expect(cs.data).to.eql({
+        16: true,
+        17: true,
+        18: true,
+        19: true,
+        20: true,
+        21: true,
+        22: true,
+        23: true,
+        24: true,
+        25: true,
+        26: true,
+        27: true,
+        28: true,
+        29: true,
+        30: true,
+        31: true
+      });
+    });
+  });
 });

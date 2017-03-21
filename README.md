@@ -29,6 +29,14 @@ The constructor takes a single input value, which can either be a number, a stri
     // Combines pairs and numbers in ranges for [0, 97, 98, 99]
     var cs = new CharacterSet([48, [97, 99]]);
 
+Or you can use the `parseUnicodeRange` method to return a CharacterSet instance from a comma-delimited unicode range string.
+
+    // Creates a character set for the code points [34, 35]
+    var cs = CharacterSet.parseUnicodeRange('u+23,u+22');
+
+    // Creates a character set for the code points [34, 35, 36, 37]
+    var cs = CharacterSet.parseUnicodeRange('u+22-25');
+
 Once you have an instance of CharacterSet you can use the following methods on it:
 
 <dl>
