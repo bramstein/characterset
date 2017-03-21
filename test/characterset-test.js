@@ -687,21 +687,15 @@ describe('CharacterSet', function () {
   });
 
   describe('parseUnicodeRange', function () {
-    var cs = null;
-
-    beforeEach(function () {
-      cs = new CharacterSet();
-    });
-
     it('parses an empty string', function () {
-      cs.parseUnicodeRange('');
+      var cs = CharacterSet.parseUnicodeRange('');
 
       expect(cs.size).to.eql(0);
       expect(cs.data).to.eql({});
     });
 
     it('parses a single value', function () {
-      cs.parseUnicodeRange('u+23,U+23');
+      var cs = CharacterSet.parseUnicodeRange('u+23,U+23');
 
       expect(cs.size).to.eql(1);
       expect(cs.data).to.eql({
@@ -710,8 +704,7 @@ describe('CharacterSet', function () {
     });
 
     it('parses multiple values', function () {
-      cs.parseUnicodeRange('u+23, u+22');
-      cs.parseUnicodeRange('u+23,u+22');
+      var cs = CharacterSet.parseUnicodeRange('u+23, u+22');
 
       expect(cs.size).to.eql(2);
       expect(cs.data).to.eql({
@@ -721,7 +714,7 @@ describe('CharacterSet', function () {
     });
 
     it('parses ranges', function () {
-      cs.parseUnicodeRange('u+22-25');
+      var cs = CharacterSet.parseUnicodeRange('u+22-25');
 
       expect(cs.size).to.eql(4);
       expect(cs.data).to.eql({
@@ -733,7 +726,7 @@ describe('CharacterSet', function () {
     });
 
     it('parses multiple ranges', function () {
-      cs.parseUnicodeRange('u+22-24, u+25-28');
+      var cs = CharacterSet.parseUnicodeRange('u+22-24, u+25-28');
 
       expect(cs.data).to.eql({
         34: true,
@@ -747,7 +740,7 @@ describe('CharacterSet', function () {
     });
 
     it('parses wildcards', function () {
-      cs.parseUnicodeRange('u+1?');
+      var cs = CharacterSet.parseUnicodeRange('u+1?');
 
       expect(cs.data).to.eql({
         16: true,
