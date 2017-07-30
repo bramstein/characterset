@@ -85,7 +85,7 @@ Once you have an instance of CharacterSet you can use the following methods on i
   <dt>toHexString()</dt>
   <dd>Returns a hex string representation of this character set.</dd>
 
-  <dt>ToHexRangeString()</dt>
+  <dt>toHexRangeString()</dt>
   <dd>Returns a hex string representation with ranges of this character set.</dd>
 </dl>
 
