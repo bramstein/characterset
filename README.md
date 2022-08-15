@@ -6,38 +6,48 @@ CharacterSet is a library for creating and manipulating Unicode character sets i
 
 If you are using Node.js you can install it using npm:
 
-    $ npm install characterset
+```sh
+npm install characterset
+```
 
-If you want to use CharacterSet in the browser, use the global `CharacterSet` constructor or include CharacterSet as an AMD module.
+If you want to use CharacterSet in the browser, use the global `CharacterSet` constructor or include CharacterSet as an ES6 module.
 
 ## API
 
 The constructor takes a single input value, which can either be a number, a string or a range. A range is an array of numbers or number pairs.
 
-    // Creates a character set with a single code point for [97]
-    var cs = new CharacterSet(97);
+```js
+import CharacterSet from 'characterset';
 
-    // Creates a character set for the code points [97, 98, 99]
-    var cs = new CharacterSet('abc');
+// Creates a character set with a single code point for [97]
+var cs = new CharacterSet(97);
 
-    // Creates a character set for the code points [97, 98, 99]
-    var cs = new CharacterSet([97, 98, 99]);
+// Creates a character set for the code points [97, 98, 99]
+var cs = new CharacterSet('abc');
 
-    // Creates a character set for the code points [97, 98, 99] using a range
-    var cs = new CharacterSet([[97, 99]]);
+// Creates a character set for the code points [97, 98, 99]
+var cs = new CharacterSet([97, 98, 99]);
 
-    // Combines pairs and numbers in ranges for [0, 97, 98, 99]
-    var cs = new CharacterSet([48, [97, 99]]);
+// Creates a character set for the code points [97, 98, 99] using a range
+var cs = new CharacterSet([[97, 99]]);
+
+// Combines pairs and numbers in ranges for [0, 97, 98, 99]
+var cs = new CharacterSet([48, [97, 99]]);
+```
 
 Or you can use the `parseUnicodeRange` method to return a CharacterSet instance from a comma-delimited unicode range string.
 
-    // Creates a character set for the code points [34, 35]
-    var cs = CharacterSet.parseUnicodeRange('u+23,u+22');
+```js
+import CharacterSet from 'characterset';
 
-    // Creates a character set for the code points [34, 35, 36, 37]
-    var cs = CharacterSet.parseUnicodeRange('u+22-25');
+// Creates a character set for the code points [34, 35]
+var cs = CharacterSet.parseUnicodeRange('u+23,u+22');
 
-Once you have an instance of CharacterSet you can use the following methods on it:
+// Creates a character set for the code points [34, 35, 36, 37]
+var cs = CharacterSet.parseUnicodeRange('u+22-25');
+```
+
+Once you have an instance of `CharacterSet` you can use the following methods on it:
 
 <dl>
   <dt>getSize()</dt>
